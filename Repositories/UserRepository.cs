@@ -3,12 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Courier_Management_REST_WEB_API.Repositories
 {
     public class UserRepository : Repository<User>
     {
+        public string Validate(string encodedString)
+        {
+            string decodedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodedString));
+            string[] splittedText = decodedString.Split(new char[] { ':' });
+            string userName = splittedText[0];
+            string password = splittedText[1];
+
+            User user = this.GetAll().Where<User>(x => x.UserName == userName && x.Password== password).FirstOrDefault();
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                return user.UserName;
+            }
+        }
         public User Validate(User user)
         {
             return GetAll().Where<User>(x => x.UserName == user.UserName && x.Password == user.Password).FirstOrDefault();

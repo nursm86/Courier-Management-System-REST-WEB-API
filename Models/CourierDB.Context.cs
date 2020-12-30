@@ -13,9 +13,9 @@ namespace Courier_Management_REST_WEB_API.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CourierManagementSystem : DbContext
+    public partial class CourierManagementDB : DbContext
     {
-        public CourierManagementSystem()
+        public CourierManagementDB()
             : base("name=CourierManagementSystem")
         {
         }

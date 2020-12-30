@@ -27,9 +27,36 @@ namespace Courier_Management_REST_WEB_API.Repositories
                 return user.UserName;
             }
         }
-        public User Validate(User user)
+        public bool Validate(User u)
         {
-            return GetAll().Where<User>(x => x.UserName == user.UserName && x.Password == user.Password).FirstOrDefault();
+            User user = this.GetAll().Where<User>(x => x.UserName == u.UserName && x.Password == u.Password).FirstOrDefault();
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool UpdateUser(User user)
+        {
+            User oldUser = Get(user.Id);
+            if (oldUser != null)
+            {
+                oldUser.Password = user.Password;
+                oldUser.image = user.image;
+                this.context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public int getIdbyUserName(User u)
+        {
+            User user = this.GetAll().Where<User>(x => x.UserName == u.UserName).FirstOrDefault();
+            return user.Id;
         }
         public void UpdatePassword(int id,string password)
         {

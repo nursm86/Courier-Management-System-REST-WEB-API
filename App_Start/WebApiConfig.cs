@@ -19,6 +19,10 @@ namespace Courier_Management_REST_WEB_API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
         }
     }
 }

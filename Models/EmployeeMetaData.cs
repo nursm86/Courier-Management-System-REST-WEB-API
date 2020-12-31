@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace Courier_Management_REST_WEB_API.Models
 {
@@ -23,7 +25,7 @@ namespace Courier_Management_REST_WEB_API.Models
         public string Blood_Group { get; set; }
         public string Qualification { get; set; }
         public int userId { get; set; }
-
+        [JsonIgnore, XmlIgnore]
         public virtual Branch Branch { get; set; }
         public virtual User User { get; set; }
     }

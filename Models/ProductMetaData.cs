@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace Courier_Management_REST_WEB_API.Models
 {
@@ -62,6 +64,7 @@ namespace Courier_Management_REST_WEB_API.Models
 
         public virtual Branch Branch { get; set; }
         public virtual Branch Branch1 { get; set; }
+        [JsonIgnore, XmlIgnore]
         public virtual User User { get; set; }
     }
 }

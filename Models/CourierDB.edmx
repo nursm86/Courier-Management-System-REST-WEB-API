@@ -31,7 +31,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="UpdatedDate" Type="datetime" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Branch_id" Type="int" Nullable="false" />
           <Property Name="Problem" Type="nvarchar(max)" Nullable="false" />
           <Property Name="employeeId" Type="int" Nullable="false" />
@@ -263,7 +263,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Branch_id" Type="Int32" Nullable="false" />
           <Property Name="Problem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="employeeId" Type="Int32" Nullable="false" />

@@ -12,12 +12,27 @@ namespace Courier_Management_REST_WEB_API.Repositories
         UserRepository userRepo = new UserRepository();
         public int getBranchId(int id)
         {
-            return (int)Get(id).Branch_id;
+            return (int)GetByUid(id).Branch_id;
+        }
+
+        public Employee GetByUid(int id)
+        {
+            return this.GetAll().Where<Employee>(x => x.userId == id).FirstOrDefault();
+        }
+
+        public void UpdateE(Employee e)
+        {
+            Employee ne = GetByUid(e.userId);
+            ne.Name = e.Name;
+            ne.Contact = e.Contact;
+            ne.Address = e.Address;
+            ne.UpdatedDate = DateTime.Now;
+            Update(ne);
         }
         public void UpdateEmployee(Employee e)
         {
-            userRepo.verifyUser(e.Id);
-            Employee ne = Get(e.Id);
+            userRepo.verifyUser(e.userId);
+            Employee ne = GetByUid(e.userId);
             ne.Name = e.Name;
             ne.DOB = e.DOB;
             ne.Contact = e.Contact;
@@ -30,8 +45,8 @@ namespace Courier_Management_REST_WEB_API.Repositories
 
         public void UpdateEmployeeInfo(Employee e)
         {
-            userRepo.verifyUser(e.Id);
-            Employee ne = Get(e.Id);
+            userRepo.verifyUser(e.userId);
+            Employee ne = GetByUid(e.userId);
             ne.Name = e.Name;
             ne.Designation = e.Designation;
             ne.Branch_id = e.Branch_id;
@@ -48,7 +63,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
             user.UpdatedDate = DateTime.Now;
             this.context.Users.Add(user);
             this.context.SaveChanges();
-            employee.Id = userRepo.getByUserName(user.UserName);
+            employee.userId = userRepo.getByUserName(user.UserName);
             employee.Joining_date = DateTime.Now;
             employee.UpdatedDate = DateTime.Now;
             this.context.Employees.Add(employee);

@@ -13,11 +13,11 @@ namespace Courier_Management_REST_WEB_API.Repositories
         public List<Product> serviceHistory(int id)
         {
             List<Product> products = GetAll().Where<Product>(x => (x.Sending_Manager_id == id || x.Receiving_Manager_id == id) && x.Product_State == 4).ToList();
-            foreach (var item in products)
-            {
-                item.Branch = branchRepo.Get(item.Sending_B_id);
-                item.Branch1 = branchRepo.Get(item.Receiving_B_id);
-            }
+            //foreach (var item in products)
+            //{
+            //    item.Branch = branchRepo.Get(item.Sending_B_id);
+            //    item.Branch1 = branchRepo.Get(item.Receiving_B_id);
+            //}
             return products;
         }
 
@@ -25,11 +25,11 @@ namespace Courier_Management_REST_WEB_API.Repositories
         {
             int bid = empRepo.getBranchId(id);
             List<Product> products = GetAll().Where<Product>(x => (x.Sending_B_id == bid || x.Receiving_B_id == bid) && (x.Product_State == 0) || x.Product_State == 2).ToList();
-            foreach (var item in products)
-            {
-                item.Branch = branchRepo.Get(item.Sending_B_id);
-                item.Branch1 = branchRepo.Get(item.Receiving_B_id);
-            }
+            //foreach (var item in products)
+            //{
+            //    item.Branch = branchRepo.Get(item.Sending_B_id);
+            //    item.Branch1 = branchRepo.Get(item.Receiving_B_id);
+            //}
             return products;
         }
 
@@ -37,22 +37,22 @@ namespace Courier_Management_REST_WEB_API.Repositories
         {
             int bid = empRepo.getBranchId(id);
             List<Product> products = GetAll().Where<Product>(x => x.Sending_B_id == bid  && x.Product_State == 1).ToList();
-            foreach (var item in products)
-            {
-                item.Branch = branchRepo.Get(item.Sending_B_id);
-                item.Branch1 = branchRepo.Get(item.Receiving_B_id);
-            }
+            //foreach (var item in products)
+            //{
+            //    item.Branch = branchRepo.Get(item.Sending_B_id);
+            //    item.Branch1 = branchRepo.Get(item.Receiving_B_id);
+            //}
             return products;
         }
         public List<Product> releaseAbleProduct(int id)
         {
             int bid = empRepo.getBranchId(id);
             List<Product> products = GetAll().Where<Product>(x => x.Receiving_B_id == bid && x.Product_State == 3).ToList();
-            foreach (var item in products)
-            {
-                item.Branch = branchRepo.Get(item.Sending_B_id);
-                item.Branch1 = branchRepo.Get(item.Receiving_B_id);
-            }
+            //foreach (var item in products)
+            //{
+            //    item.Branch = branchRepo.Get(item.Sending_B_id);
+            //    item.Branch1 = branchRepo.Get(item.Receiving_B_id);
+            //}
             return products;
         }
 

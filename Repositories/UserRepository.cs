@@ -10,6 +10,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
 {
     public class UserRepository : Repository<User>
     {
+        ProductRepository proRepo = new ProductRepository();
         public string Validate(string encodedString)
         {
             string decodedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodedString));
@@ -62,7 +63,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
         {
             User usertoChange = Get(id);
             usertoChange.Password = password;
-            this.context.SaveChanges();
+            Update(usertoChange);
         }
 
         public void verifyUser(int id)
@@ -98,7 +99,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
             u.image = null;
             this.context.Users.Add(u);
             this.context.SaveChanges();
-            c.Id = getByUserName(u.UserName);
+            c.userId = getByUserName(u.UserName);
             c.UpdatedDate = DateTime.Now;
             this.context.Customers.Add(c);
             this.context.SaveChanges();
@@ -114,5 +115,10 @@ namespace Courier_Management_REST_WEB_API.Repositories
             }
             return false;
         }
+
+        //public List<Product> GetOrders(int id)
+        //{
+        //    return proRepo.GetAll().Where<Product>(x => x.Customer_id == id).ToList();
+        //}
     } 
 }

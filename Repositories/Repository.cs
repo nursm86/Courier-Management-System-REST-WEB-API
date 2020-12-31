@@ -10,7 +10,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected CourierManagementDB context = new CourierManagementDB();
+        protected CourierManagementSystem context = new CourierManagementSystem();
         public void Delete(int id)
         {
             this.context.Set<T>().Remove(Get(id));

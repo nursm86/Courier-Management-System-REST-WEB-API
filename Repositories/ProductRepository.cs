@@ -90,5 +90,15 @@ namespace Courier_Management_REST_WEB_API.Repositories
             this.context.Products.Add(p);
             this.context.SaveChanges();
         }
+
+        public List<Product> GetOrders(int id)
+        {
+            return this.GetAll().Where<Product>(x => x.Customer_id == id && x.Product_State !=4).ToList();
+        }
+
+        public List<Product>GetReleasedProdctById(int id)
+        {
+            return this.GetAll().Where<Product>(x => x.Customer_id == id && x.Product_State == 4).ToList();
+        }
     }
 }

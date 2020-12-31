@@ -36,10 +36,31 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(customer);
         }
 
-        //[Route("{id}/TrackProducts")]
-        //public IHttpActionResult GetOrders(int id)
-        //{
-        //    return Ok(userRepo.GetOrders(id));
-        //}
+        [Route("{id}/TrackProducts")]
+        public IHttpActionResult GetOrders(int id)
+        {
+            return Ok(proRepo.GetOrders(id));
+        }
+
+        [Route("{id}/ServiceHistory")]
+        public IHttpActionResult GetReleasedProducts(int id)
+        {
+            return Ok(proRepo.GetReleasedProdctById(id));
+        }
+
+        [Route("{id}/NewOrder")]
+        public IHttpActionResult PostNewOrder(int id,Product product)
+        {
+            product.Customer_id = id;
+            proRepo.insertProduct(product);
+            return Ok(product);
+        }
+
+        [Route("{id}/updatePassword")]
+        public IHttpActionResult PutUpdatePass([FromUri] int id, [FromBody] User user)
+        {
+            userRepo.UpdatePassword(id, user.Password);
+            return Ok(userRepo.Get(id));
+        }
     }
 }

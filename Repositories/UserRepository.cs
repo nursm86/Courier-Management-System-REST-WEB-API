@@ -10,7 +10,6 @@ namespace Courier_Management_REST_WEB_API.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        ProductRepository proRepo = new ProductRepository();
         public string Validate(string encodedString)
         {
             string decodedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodedString));
@@ -115,10 +114,5 @@ namespace Courier_Management_REST_WEB_API.Repositories
             }
             return false;
         }
-
-        //public List<Product> GetOrders(int id)
-        //{
-        //    return proRepo.GetAll().Where<Product>(x => x.Customer_id == id).ToList();
-        //}
     } 
 }

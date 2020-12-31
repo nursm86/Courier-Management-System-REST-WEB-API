@@ -9,9 +9,11 @@
 
 namespace Courier_Management_REST_WEB_API.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.Xml.Serialization;
+
     public partial class Product
     {
         public int Id { get; set; }
@@ -35,6 +37,7 @@ namespace Courier_Management_REST_WEB_API.Models
     
         public virtual Branch Branch { get; set; }
         public virtual Branch Branch1 { get; set; }
+        [JsonIgnore,XmlIgnore]
         public virtual User User { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Courier_Management_REST_WEB_API.Repositories;
+﻿
+using Courier_Management_REST_WEB_API.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace finalAssignment__APWDN.Attributes
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             base.OnAuthorization(actionContext);
-            if(actionContext.Request.Headers.Authorization == null)
+            if (actionContext.Request.Headers.Authorization == null)
             {
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
             }
@@ -31,7 +32,7 @@ namespace finalAssignment__APWDN.Attributes
 
                 if (userName != null)
                 {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(userName),null);
+                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(userName), null);
                 }
                 else
                 {

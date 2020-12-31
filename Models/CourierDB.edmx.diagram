@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="54254250413e41589d6549688e27d544" Name="Diagram1">
+      <Diagram DiagramId="415d8978a4584395877cb30f43ae560c" Name="Diagram1">
         <EntityTypeShape EntityType="CourierManagementSystemModel.Branch" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CourierManagementSystemModel.Customer" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CourierManagementSystemModel.Employee_Problems" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />

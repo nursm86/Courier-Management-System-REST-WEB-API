@@ -1,4 +1,5 @@
 ﻿using Courier_Management_REST_WEB_API.Attributes;
+using Courier_Management_REST_WEB_API.Links;
 using Courier_Management_REST_WEB_API.Models;
 using Courier_Management_REST_WEB_API.Repositories;
 using System;
@@ -19,18 +20,20 @@ namespace Courier_Management_REST_WEB_API.Controllers
         ProductRepository proRepo = new ProductRepository();
         Employee_ProblemRepository epRepo = new Employee_ProblemRepository();
 
-        [Route("dashboard"),EmployeeAuthenticaiton]
-        public IHttpActionResult GetDashBoard()
+        [Route("{id}"),EmployeeAuthenticaiton]
+        public IHttpActionResult GetDashBoard(int id)
         {
             return Ok();
         }
         [Route("{id}/profile"), EmployeeAuthenticaiton]
         public IHttpActionResult GetProfile(int id)
         {
-            return Ok(empRepo.GetByUid(id));
+            Employee employee = empRepo.GetByUid(id);
+            employee.User.links = EmployeeLinks.getLinks(id, 2);
+            return Ok(employee);
         }
 
-        [Route("{id}/updateInfo"), EmployeeAuthenticaiton]
+        [Route("{id}/profile"), EmployeeAuthenticaiton]
         public IHttpActionResult PutUpdateInfo([FromUri]int id,[FromBody]Employee emp)
         {
             var modelState = ActionContext.ModelState;
@@ -117,7 +120,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(proRepo.receivedProduct(id));
         }
         [Route("Product/{id}"), EmployeeAuthenticaiton]
-        public IHttpActionResult GetProducts(int id)
+        public IHttpActionResult GetProduct(int id)
         {
             return Ok(proRepo.Get(id));
         }

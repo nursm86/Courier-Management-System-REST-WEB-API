@@ -9,6 +9,7 @@
 
 namespace Courier_Management_REST_WEB_API.Models
 {
+    using Courier_Management_REST_WEB_API.Links;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -39,6 +40,13 @@ namespace Courier_Management_REST_WEB_API.Models
         [Required]
         public int Status { get; set; }
         public string image { get; set; }
+        [JsonIgnore,XmlIgnore]
+        public List<Link> links = new List<Link>();
+        
+        public List<Link> Links
+        {
+            get { return links; }
+        }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore, XmlIgnore]

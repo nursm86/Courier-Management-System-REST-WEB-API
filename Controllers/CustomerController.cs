@@ -1,4 +1,5 @@
 ﻿using Courier_Management_REST_WEB_API.Attributes;
+using Courier_Management_REST_WEB_API.Links;
 using Courier_Management_REST_WEB_API.Models;
 using Courier_Management_REST_WEB_API.Repositories;
 using System;
@@ -19,15 +20,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
         BranchRepository branchRepo = new BranchRepository();
         EmployeeRepository empRepo = new EmployeeRepository();
 
-        [Route("{id}/Dashboard"),CustomerAuthentication]
+        [Route("{id}"),CustomerAuthentication]
         public IHttpActionResult GetDashboard(int id)
         {
-            return Ok(cusRepo.GetByUid(id));
+            Customer customer = cusRepo.GetByUid(id);
+            customer.User.links = CustomerLinks.getLinks(id,1);
+            return Ok(customer);
         }
         [Route("{id}/profile"), CustomerAuthentication]
         public IHttpActionResult GetProfile(int id)
         {
-            return Ok(cusRepo.GetByUid(id));
+            Customer customer = cusRepo.GetByUid(id);
+            customer.User.links = CustomerLinks.getLinks(id,2);
+            return Ok(customer);
         }
         [Route("{id}/profile"), CustomerAuthentication]
         public IHttpActionResult PutUpdateProfile([FromUri]int id,[FromBody]Customer customer)

@@ -1,4 +1,5 @@
 ﻿using Courier_Management_REST_WEB_API.Attributes;
+using Courier_Management_REST_WEB_API.Links;
 using Courier_Management_REST_WEB_API.Models;
 using Courier_Management_REST_WEB_API.Repositories;
 using System;
@@ -21,12 +22,16 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}"),AdminAuthentication]
         public IHttpActionResult GetDashboard(int id)
         {
-            return Ok(userRepo.Get(id));
+            User user = userRepo.Get(id);
+            user.links = AdminLinks.getLinks(id, 1);
+            return Ok(user);
         }
         [Route("{id}/profile"),AdminAuthentication]
         public IHttpActionResult GetProfile(int id)
         {
-            return Ok(userRepo.Get(id));
+            User user = userRepo.Get(id);
+            user.links = AdminLinks.getLinks(id,2);
+            return Ok(user);
         }
         [Route("{id}/profile"), AdminAuthentication]
         public IHttpActionResult PutUpdateProfile(int id,User user)
@@ -36,6 +41,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             {
                 user.Id = id;
                 userRepo.Update(user);
+                user.links = AdminLinks.getLinks(id, 3);
                 return Ok(userRepo.Get(id));
             }
             return BadRequest(modelState);

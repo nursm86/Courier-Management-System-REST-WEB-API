@@ -9,6 +9,7 @@
 
 namespace Courier_Management_REST_WEB_API.Models
 {
+    using Courier_Management_REST_WEB_API.Links;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -31,6 +32,14 @@ namespace Courier_Management_REST_WEB_API.Models
         public string branchName { get; set; }
         [Required,MinLength(5)]
         public string address { get; set; }
+
+        [JsonIgnore, XmlIgnore]
+        public List<Link> links = new List<Link>();
+
+        public List<Link> Links
+        {
+            get { return links; }
+        }
         public Nullable<System.DateTime> updatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

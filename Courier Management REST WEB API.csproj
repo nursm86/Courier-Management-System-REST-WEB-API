@@ -124,6 +124,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Links\AdminLinks.cs" />
+    <Compile Include="Links\CustomerLinks.cs" />
+    <Compile Include="Links\EmployeeLinks.cs" />
+    <Compile Include="Links\Link.cs" />
     <Compile Include="Models\Branch.cs">
       <DependentUpon>CourierDB.tt</DependentUpon>
     </Compile>

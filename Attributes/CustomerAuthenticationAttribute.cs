@@ -1,20 +1,18 @@
-﻿
-using Courier_Management_REST_WEB_API.Repositories;
+﻿using Courier_Management_REST_WEB_API.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace finalAssignment__APWDN.Attributes
+namespace Courier_Management_REST_WEB_API.Attributes
 {
-    public class BasicAuthenticationAttribute:AuthorizationFilterAttribute
+    public class CustomerAuthenticationAttribute : AuthorizationFilterAttribute
     {
         UserRepository userRepo = new UserRepository();
         public override void OnAuthorization(HttpActionContext actionContext)
@@ -30,7 +28,7 @@ namespace finalAssignment__APWDN.Attributes
 
                 int usertype = userRepo.Validate(encodedString);
 
-                if (usertype != -1)
+                if (usertype == 2)
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(usertype.ToString()), null);
                 }

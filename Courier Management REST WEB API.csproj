@@ -113,7 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\AdminAuthenticationAttribute.cs" />
     <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Attributes\CustomerAuthenticationAttribute.cs" />
+    <Compile Include="Attributes\EmployeeAuthenticaitonAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />

@@ -1,4 +1,5 @@
-﻿using Courier_Management_REST_WEB_API.Models;
+﻿using Courier_Management_REST_WEB_API.Attributes;
+using Courier_Management_REST_WEB_API.Models;
 using Courier_Management_REST_WEB_API.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,17 @@ namespace Courier_Management_REST_WEB_API.Controllers
         EmployeeRepository empRepo = new EmployeeRepository();
         Employee_ProblemRepository epRepo = new Employee_ProblemRepository();
 
-        [Route("{id}")]
+        [Route("{id}"),AdminAuthentication]
         public IHttpActionResult GetDashboard(int id)
         {
             return Ok(userRepo.Get(id));
         }
-        [Route("{id}/profile")]
+        [Route("{id}/profile"),AdminAuthentication]
         public IHttpActionResult GetProfile(int id)
         {
             return Ok(userRepo.Get(id));
         }
-        [Route("{id}/profile")]
+        [Route("{id}/profile"), AdminAuthentication]
         public IHttpActionResult PutUpdateProfile(int id,User user)
         {
             var modelState = ActionContext.ModelState;
@@ -40,19 +41,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return BadRequest(modelState);
             
         }
-        [Route("BranchList")]
+        [Route("BranchList"), AdminAuthentication]
         public IHttpActionResult GetAllBranch()
         {
             return Ok(branchRepo.GetAll());
         }
 
-        [Route("Branch/{id}")]
+        [Route("Branch/{id}"), AdminAuthentication]
         public IHttpActionResult GetBranch(int id)
         {
             return Ok(branchRepo.Get(id));
         }
 
-        [Route("addBranch")]
+        [Route("addBranch"), AdminAuthentication]
         public IHttpActionResult PostAddBranch(Branch branch)
         {
             var modelState = ActionContext.ModelState;
@@ -64,17 +65,17 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return BadRequest(modelState);
             
         }
-        [Route("AllEmployee")]
+        [Route("AllEmployee"), AdminAuthentication]
         public IHttpActionResult GetAllEmployee(Branch branch)
         {
             return Ok(empRepo.GetAll());
         }
-        [Route("Employee/{id}")]
+        [Route("Employee/{id}"), AdminAuthentication]
         public IHttpActionResult GetEmployee(int id)
         {
             return Ok(empRepo.GetByUid(id));
         }
-        [Route("Employee/{id}")]
+        [Route("Employee/{id}"), AdminAuthentication]
         public IHttpActionResult PutUpdateEmployee(int id,Employee employee)
         {
             var modelState = ActionContext.ModelState;
@@ -86,7 +87,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             }
             return BadRequest(modelState);
         }
-        [Route("addEmployee")]
+        [Route("addEmployee"), AdminAuthentication]
         public IHttpActionResult PostAddEmployee(Employee employee)
         {
             var modelState = ActionContext.ModelState;
@@ -97,20 +98,20 @@ namespace Courier_Management_REST_WEB_API.Controllers
             }
             return BadRequest(modelState);
         }
-        [Route("employeeProblems")]
+        [Route("employeeProblems"), AdminAuthentication]
         public IHttpActionResult GetAllProblems()
         {
             return Ok(epRepo.GetAll());
         }
 
-        [Route("solveProblem/{id}")]
+        [Route("solveProblem/{id}"), AdminAuthentication]
         public IHttpActionResult DeleteProblem(int id)
         {
             epRepo.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [Route("{id}/updatePassword")]
+        [Route("{id}/updatePassword"), AdminAuthentication]
         public IHttpActionResult PutUpdatePass([FromUri] int id, [FromBody] User user)
         {
             if (user.Password.Length > 3)

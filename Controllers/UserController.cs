@@ -32,7 +32,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return StatusCode(HttpStatusCode.Unauthorized);
         }
 
-        [Route("{id}", Name = "GetUserById")]
+        [Route("{id}", Name = "GetUserById"),BasicAuthentication]
         public IHttpActionResult Get(int id)
         {
             User user = userRepo.Get(id);
@@ -43,7 +43,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(user);
         }
 
-        [Route("")]
+        [Route(""),BasicAuthentication]
         public IHttpActionResult Post(User user)
         {
             var modelState = ActionContext.ModelState;

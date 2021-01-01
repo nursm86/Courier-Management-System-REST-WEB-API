@@ -1,4 +1,5 @@
-﻿using Courier_Management_REST_WEB_API.Models;
+﻿using Courier_Management_REST_WEB_API.Attributes;
+using Courier_Management_REST_WEB_API.Models;
 using Courier_Management_REST_WEB_API.Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,17 @@ namespace Courier_Management_REST_WEB_API.Controllers
         BranchRepository branchRepo = new BranchRepository();
         EmployeeRepository empRepo = new EmployeeRepository();
 
-        [Route("{id}/Dashboard")]
+        [Route("{id}/Dashboard"),CustomerAuthentication]
         public IHttpActionResult GetDashboard(int id)
         {
             return Ok(cusRepo.GetByUid(id));
         }
-        [Route("{id}/profile")]
+        [Route("{id}/profile"), CustomerAuthentication]
         public IHttpActionResult GetProfile(int id)
         {
             return Ok(cusRepo.GetByUid(id));
         }
-        [Route("{id}/profile")]
+        [Route("{id}/profile"), CustomerAuthentication]
         public IHttpActionResult PutUpdateProfile([FromUri]int id,[FromBody]Customer customer)
         {
             var modelState = ActionContext.ModelState;
@@ -41,19 +42,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return BadRequest(modelState);
         }
 
-        [Route("{id}/TrackProducts")]
+        [Route("{id}/TrackProducts"), CustomerAuthentication]
         public IHttpActionResult GetOrders(int id)
         {
             return Ok(proRepo.GetOrders(id));
         }
 
-        [Route("{id}/ServiceHistory")]
+        [Route("{id}/ServiceHistory"), CustomerAuthentication]
         public IHttpActionResult GetReleasedProducts(int id)
         {
             return Ok(proRepo.GetReleasedProdctById(id));
         }
 
-        [Route("{id}/NewOrder")]
+        [Route("{id}/NewOrder"), CustomerAuthentication]
         public IHttpActionResult PostNewOrder(int id,Product product)
         {
             var modelState = ActionContext.ModelState;
@@ -66,7 +67,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return BadRequest(modelState);
         }
 
-        [Route("{id}/updatePassword")]
+        [Route("{id}/updatePassword"), CustomerAuthentication]
         public IHttpActionResult PutUpdatePass([FromUri] int id, [FromBody] User user)
         {
             if (user.Password.Length > 3)

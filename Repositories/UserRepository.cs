@@ -10,7 +10,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        public string Validate(string encodedString)
+        public int Validate(string encodedString)
         {
             string decodedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodedString));
             string[] splittedText = decodedString.Split(new char[] { ':' });
@@ -20,11 +20,11 @@ namespace Courier_Management_REST_WEB_API.Repositories
             User user = this.GetAll().Where<User>(x => x.UserName == userName && x.Password== password).FirstOrDefault();
             if (user == null)
             {
-                return null;
+                return -1;
             }
             else
             {
-                return user.UserName;
+                return user.UserType;
             }
         }
         public bool Validate(User u)

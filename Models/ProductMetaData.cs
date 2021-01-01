@@ -44,21 +44,34 @@ namespace Courier_Management_REST_WEB_API.Models
             Released
         }
         public int Id { get; set; }
+        [Required]
         public int ProductType { get; set; }
+        [Required]
         public int Customer_id { get; set; }
+        [Required]
         public int Receiving_B_id { get; set; }
+        [Required]
         public int Sending_B_id { get; set; }
+        [Required]
         public double Delivery_charge { get; set; }
         public int Receiving_Manager_id { get; set; }
         public System.DateTime UpdatedDate { get; set; }
         public int Sending_Manager_id { get; set; }
+        [Required]
         public int ProductCategory { get; set; }
+        [Required]
         public int PaymentMethod { get; set; }
+        [Required]
         public string RecieverName { get; set; }
+        [Required,EmailAddress]
         public string RecieverEmail { get; set; }
+        [Required, MinLength(11), MaxLength(14)]
         public string RecieverContact { get; set; }
+        [Required,MinLength(3)]
         public string RecieverAddress { get; set; }
+        [Required,MinLength(5)]
         public string Description { get; set; }
+        [Required]
         public int Product_State { get; set; }
         public Nullable<System.DateTime> Release_Date { get; set; }
 

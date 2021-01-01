@@ -32,7 +32,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return StatusCode(HttpStatusCode.Unauthorized);
         }
 
-        [Route("{id}", Name = "GetUserById"), BasicAuthentication]
+        [Route("{id}", Name = "GetUserById")]
         public IHttpActionResult Get(int id)
         {
             User user = userRepo.Get(id);
@@ -46,9 +46,14 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("")]
         public IHttpActionResult Post(User user)
         {
-            userRepo.Insert(user);
-            string uri = Url.Link("GetUserById", new { id = user.Id });
-            return Created(uri, user);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                userRepo.Insert(user);
+                string uri = Url.Link("GetUserById", new { id = user.Id });
+                return Created(uri, user);
+            }
+            return BadRequest(modelState);
         }
 
         [Route("{id}"), BasicAuthentication]
@@ -74,6 +79,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
             }
             userRepo.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+        [Route("Registration")]
+        public IHttpActionResult PostNewUser(Customer customer)
+        {
+            var modelState = ActionContext.ModelState;
+            customer.User.Status = 0;
+            if (modelState.IsValid)
+            {
+                userRepo.insertUser(customer.User, customer);
+                string uri = Url.Link("GetUserById", new { id = customer.User.Id });
+                return Created(uri, customer);
+            }
+            return BadRequest(modelState);
         }
     }
 }

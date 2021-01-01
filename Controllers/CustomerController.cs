@@ -31,9 +31,14 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/profile")]
         public IHttpActionResult PutUpdateProfile([FromUri]int id,[FromBody]Customer customer)
         {
-            customer.userId = id;
-            cusRepo.UpdateU(customer);
-            return Ok(customer);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                customer.userId = id;
+                cusRepo.UpdateU(customer);
+                return Ok(customer);
+            }
+            return BadRequest(modelState);
         }
 
         [Route("{id}/TrackProducts")]
@@ -51,16 +56,25 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/NewOrder")]
         public IHttpActionResult PostNewOrder(int id,Product product)
         {
-            product.Customer_id = id;
-            proRepo.insertProduct(product);
-            return Ok(product);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                product.Customer_id = id;
+                proRepo.insertProduct(product);
+                return Ok(product);
+            }
+            return BadRequest(modelState);
         }
 
         [Route("{id}/updatePassword")]
         public IHttpActionResult PutUpdatePass([FromUri] int id, [FromBody] User user)
         {
-            userRepo.UpdatePassword(id, user.Password);
-            return Ok(userRepo.Get(id));
+            if (user.Password.Length > 3)
+            {
+                userRepo.UpdatePassword(id, user.Password);
+                return Ok(userRepo.Get(id));
+            }
+            return BadRequest("Password Must be 4 character Long!!!"); ;
         }
     }
 }

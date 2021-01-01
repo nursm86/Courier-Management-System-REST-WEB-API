@@ -28,11 +28,17 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(userRepo.Get(id));
         }
         [Route("{id}/profile")]
-        public IHttpActionResult PostUpdateProfile(int id,User user)
+        public IHttpActionResult PutUpdateProfile(int id,User user)
         {
-            user.Id = id;
-            userRepo.Update(user);
-            return Ok(userRepo.Get(id));
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                user.Id = id;
+                userRepo.Update(user);
+                return Ok(userRepo.Get(id));
+            }
+            return BadRequest(modelState);
+            
         }
         [Route("BranchList")]
         public IHttpActionResult GetAllBranch()
@@ -49,8 +55,14 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("addBranch")]
         public IHttpActionResult PostAddBranch(Branch branch)
         {
-            branchRepo.Insert(branch);
-            return Ok(branch);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                branchRepo.Insert(branch);
+                return Ok(branch);
+            }
+            return BadRequest(modelState);
+            
         }
         [Route("AllEmployee")]
         public IHttpActionResult GetAllEmployee(Branch branch)
@@ -63,17 +75,27 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(empRepo.GetByUid(id));
         }
         [Route("Employee/{id}")]
-        public IHttpActionResult PostUpdateEmployee(int id,Employee employee)
+        public IHttpActionResult PutUpdateEmployee(int id,Employee employee)
         {
-            employee.userId = id;
-            empRepo.UpdateEmployeeInfo(employee);
-            return Ok(empRepo.GetByUid(id));
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                employee.userId = id;
+                empRepo.UpdateEmployeeInfo(employee);
+                return Ok(empRepo.GetByUid(id));
+            }
+            return BadRequest(modelState);
         }
         [Route("addEmployee")]
         public IHttpActionResult PostAddEmployee(Employee employee)
         {
-            empRepo.addEmployee(employee.User,employee);
-            return Ok(employee);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                empRepo.addEmployee(employee.User, employee);
+                return Ok(employee);
+            }
+            return BadRequest(modelState);
         }
         [Route("employeeProblems")]
         public IHttpActionResult GetAllProblems()
@@ -91,8 +113,12 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/updatePassword")]
         public IHttpActionResult PutUpdatePass([FromUri] int id, [FromBody] User user)
         {
-            userRepo.UpdatePassword(id, user.Password);
-            return Ok(userRepo.Get(id));
+            if (user.Password.Length > 3)
+            {
+                userRepo.UpdatePassword(id, user.Password);
+                return Ok(userRepo.Get(id));
+            }
+            return BadRequest("Password Must be 4 character Long!!!");
         }
     }
 }

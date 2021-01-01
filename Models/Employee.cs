@@ -11,13 +11,17 @@ namespace Courier_Management_REST_WEB_API.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Employee
     {
+        [Required,MinLength(3)]
         public string Name { get; set; }
         public Nullable<System.DateTime> Joining_date { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
+        [Required]
         public Nullable<double> Salary { get; set; }
+        [Required]
         public Nullable<double> Bonus { get; set; }
         public string Contact { get; set; }
         public string Address { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace Courier_Management_REST_WEB_API.Models
         public System.DateTime UpdatedDate { get; set; }
         public int Id { get; set; }
         public int Branch_id { get; set; }
+        [Required]
         public string Problem { get; set; }
         public int employeeId { get; set; }
         public virtual Branch Branch { get; set; }

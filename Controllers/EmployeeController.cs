@@ -32,16 +32,28 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/updateInfo")]
         public IHttpActionResult PutUpdateInfo([FromUri]int id,[FromBody]Employee emp)
         {
-            empRepo.UpdateEmployee(emp);
-            return Ok(emp);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                empRepo.UpdateEmployee(emp);
+                return Ok(emp);
+            }
+            return BadRequest(modelState);
+            
         }
 
         [Route("{id}/updateProfile")]
         public IHttpActionResult PutProfile([FromUri]int id,[FromBody] Employee employee)
         {
-            employee.userId = id;
-            empRepo.UpdateE(employee);
-            return Ok(empRepo.GetByUid(id));
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                employee.userId = id;
+                empRepo.UpdateE(employee);
+                return Ok(empRepo.GetByUid(id));
+            }
+            return BadRequest(modelState);
+            
         }
 
         [Route("{id}/serviceHistory")]
@@ -86,12 +98,16 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("createCustomer")]
         public IHttpActionResult PostCreateCustomer(Customer customer)
         {
-            if (ModelState.IsValid)
+            var modelState = ActionContext.ModelState;
+            customer.User.Status = 1;
+            if (modelState.IsValid)
             {
                 userRepo.insertUser(customer.User, customer);
+                string uri = Url.Link("GetCustomerById", new { id = customer.User.Id });
+                return Created(uri, customer);
             }
-            string uri = Url.Link("GetCustomerById", new { id = customer.User.Id });
-            return Created(uri, customer);
+            return BadRequest(modelState);
+            
         }
         [Route("{id}/receivedProducts")]
         public IHttpActionResult GetReceivedProduct(int id)
@@ -120,6 +136,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/receiveProductFromCustomer/{pid}")]
         public IHttpActionResult PutReceiveProductFromCustomer(int id,int pid)
         {
+
             proRepo.receieveFromCustomer(pid, id);
             return Ok(proRepo.Get(pid));
         }
@@ -148,15 +165,26 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/helpline")]
         public IHttpActionResult PostHelp([FromUri]int id,[FromBody]Employee_Problems ep)
         {
-            epRepo.UpdateProblem(id, ep);
-            return Ok(ep);
+            var modelState = ActionContext.ModelState;
+            if (modelState.IsValid)
+            {
+                epRepo.UpdateProblem(id, ep);
+                return Ok(ep);
+            }
+            return BadRequest(modelState);
+            
         }
 
         [Route("{id}/updatePassword")]
         public IHttpActionResult PutUpdatePass([FromUri]int id,[FromBody]User user)
         {
-            userRepo.UpdatePassword(id, user.Password);
-            return Ok(userRepo.Get(id));
+            if (user.Password.Length>3)
+            {
+                userRepo.UpdatePassword(id, user.Password);
+                return Ok(userRepo.Get(id));
+            }
+            return BadRequest("Password Must be 4 character Long!!!");
+            
         }
     }
 }

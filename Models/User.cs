@@ -12,6 +12,7 @@ namespace Courier_Management_REST_WEB_API.Models
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Xml.Serialization;
 
     public partial class User
@@ -26,11 +27,16 @@ namespace Courier_Management_REST_WEB_API.Models
         }
     
         public int Id { get; set; }
+        [Required,MinLength(3)]
         public string UserName { get; set; }
+        [Required,EmailAddress]
         public string EmailAddress { get; set; }
         public System.DateTime UpdatedDate { get; set; }
+        [Required,MinLength(4)]
         public string Password { get; set; }
+        [Required]
         public int UserType { get; set; }
+        [Required]
         public int Status { get; set; }
         public string image { get; set; }
     

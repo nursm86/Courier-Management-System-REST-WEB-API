@@ -11,7 +11,9 @@ namespace Courier_Management_REST_WEB_API.Models
     public class BranchMetaData
     {
         public int Id { get; set; }
+        [Required,MinLength(3)]
         public string branchName { get; set; }
+        [Required,MinLength(5)]
         public string address { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }
 

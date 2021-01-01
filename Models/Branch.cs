@@ -12,6 +12,7 @@ namespace Courier_Management_REST_WEB_API.Models
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Xml.Serialization;
 
     public partial class Branch
@@ -26,7 +27,9 @@ namespace Courier_Management_REST_WEB_API.Models
         }
     
         public int Id { get; set; }
+        [Required,MinLength(3)]
         public string branchName { get; set; }
+        [Required,MinLength(5)]
         public string address { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }
     

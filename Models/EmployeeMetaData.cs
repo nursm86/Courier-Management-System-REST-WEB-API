@@ -10,11 +10,13 @@ namespace Courier_Management_REST_WEB_API.Models
 {
     public class EmployeeMetaData
     {
-        [Required,StringLength(20)]
+        [Required,MinLength(3)]
         public string Name { get; set; }
         public Nullable<System.DateTime> Joining_date { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
+        [Required]
         public Nullable<double> Salary { get; set; }
+        [Required]
         public Nullable<double> Bonus { get; set; }
         public string Contact { get; set; }
         public string Address { get; set; }

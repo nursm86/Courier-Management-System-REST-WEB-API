@@ -30,7 +30,7 @@ namespace Courier_Management_REST_WEB_API.Attributes
 
                 if (usertype == 2)
                 {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(usertype.ToString()), null);
+                    //Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(usertype.ToString()), null);
                 }
                 else
                 {

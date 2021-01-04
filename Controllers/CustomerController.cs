@@ -37,14 +37,9 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/profile"), CustomerAuthentication]
         public IHttpActionResult PutUpdateProfile([FromUri]int id,[FromBody]Customer customer)
         {
-            var modelState = ActionContext.ModelState;
-            if (modelState.IsValid)
-            {
-                customer.userId = id;
-                cusRepo.UpdateU(customer);
-                return Ok(customer);
-            }
-            return BadRequest(modelState);
+            customer.userId = id;
+            cusRepo.UpdateU(customer);
+            return Ok(customer);
         }
 
         [Route("{id}/TrackProducts"), CustomerAuthentication]
@@ -63,13 +58,26 @@ namespace Courier_Management_REST_WEB_API.Controllers
         public IHttpActionResult PostNewOrder(int id,Product product)
         {
             var modelState = ActionContext.ModelState;
+            product.Product_State = 0;
             if (modelState.IsValid)
             {
                 product.Customer_id = id;
                 proRepo.insertProduct(product);
-                return Ok(product);
+                return Created("",product);
             }
             return BadRequest(modelState);
+        }
+
+        [Route("branches"),CustomerAuthentication]
+        public IHttpActionResult GetBranches()
+        {
+            return Ok(branchRepo.GetAll());
+        }
+
+        [Route("report/{id}"),CustomerAuthentication]
+        public IHttpActionResult GetReportData(int id)
+        {
+            return Ok(cusRepo.Report(id));
         }
 
         [Route("{id}/updatePassword"), CustomerAuthentication]
@@ -81,6 +89,13 @@ namespace Courier_Management_REST_WEB_API.Controllers
                 return Ok(userRepo.Get(id));
             }
             return BadRequest("Password Must be 4 character Long!!!"); ;
+        }
+
+        [Route("cancelProduct/{pid}"),CustomerAuthentication]
+        public IHttpActionResult DeleteOrder(int pid)
+        {
+            proRepo.Delete(pid);
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }

@@ -22,6 +22,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(userRepo.GetAll());
         }
 
+        [Route("check/{username}")]
+        public IHttpActionResult GetUserName(string username)
+        {
+            if(userRepo.getByUserName(username) != 0)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+        }
+
         [Route("login")]
         public IHttpActionResult PostValidate(User user)
         {
@@ -85,6 +98,8 @@ namespace Courier_Management_REST_WEB_API.Controllers
         {
             var modelState = ActionContext.ModelState;
             customer.User.Status = 0;
+            customer.User.UpdatedDate = DateTime.Now;
+            customer.UpdatedDate = DateTime.Now;
             if (modelState.IsValid)
             {
                 userRepo.insertUser(customer.User, customer);

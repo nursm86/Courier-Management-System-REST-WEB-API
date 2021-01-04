@@ -36,28 +36,17 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("{id}/profile"), EmployeeAuthenticaiton]
         public IHttpActionResult PutUpdateInfo([FromUri]int id,[FromBody]Employee emp)
         {
-            var modelState = ActionContext.ModelState;
-            if (modelState.IsValid)
-            {
-                empRepo.UpdateEmployee(emp);
-                return Ok(emp);
-            }
-            return BadRequest(modelState);
-            
+            emp.userId = id;
+            empRepo.UpdateEmployee(emp);
+            return Ok(emp);
         }
 
         [Route("{id}/updateProfile"), EmployeeAuthenticaiton]
         public IHttpActionResult PutProfile([FromUri]int id,[FromBody] Employee employee)
         {
-            var modelState = ActionContext.ModelState;
-            if (modelState.IsValid)
-            {
-                employee.userId = id;
-                empRepo.UpdateE(employee);
-                return Ok(empRepo.GetByUid(id));
-            }
-            return BadRequest(modelState);
-            
+            employee.userId = id;
+            empRepo.UpdateE(employee);
+            return Ok(empRepo.GetByUid(id));         
         }
 
         [Route("{id}/serviceHistory"), EmployeeAuthenticaiton]
@@ -85,8 +74,13 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok();
         }
 
-        [Route("Customer/{id}/block"), EmployeeAuthenticaiton]
+        [Route("report/{id}")]
+        public IHttpActionResult GetReport(int id)
+        {
+            return Ok(empRepo.Report(id));
+        }
 
+        [Route("Customer/{id}/block"), EmployeeAuthenticaiton]
         public IHttpActionResult PutBlock(int id)
         {
             userRepo.blockUser(id);
@@ -138,7 +132,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
         }
 
         [Route("{id}/receiveProductFromCustomer/{pid}"), EmployeeAuthenticaiton]
-        public IHttpActionResult PutReceiveProductFromCustomer(int id,int pid)
+        public IHttpActionResult PutReceiveProductFromCustomer([FromUri]int id,[FromUri]int pid)
         {
 
             proRepo.receieveFromCustomer(pid, id);
@@ -179,7 +173,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             
         }
 
-        [Route("{id}/updatePassword")]
+        [Route("{id}/updatePassword"),EmployeeAuthenticaiton]
         public IHttpActionResult PutUpdatePass([FromUri]int id,[FromBody]User user)
         {
             if (user.Password.Length>3)
@@ -189,6 +183,11 @@ namespace Courier_Management_REST_WEB_API.Controllers
             }
             return BadRequest("Password Must be 4 character Long!!!");
             
+        }
+        [Route("{id}/phone")]
+        public IHttpActionResult GetPhone(int id)
+        {
+            return Ok(empRepo.getPhone(id));
         }
     }
 }

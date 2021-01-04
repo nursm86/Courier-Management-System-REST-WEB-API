@@ -1,4 +1,5 @@
 ﻿using Courier_Management_REST_WEB_API.Models;
+using Courier_Management_REST_WEB_API.Report;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,23 @@ namespace Courier_Management_REST_WEB_API.Repositories
                 return user.UserType;
             }
         }
+
+        public AdminReportData Report(int id)
+        {
+            ProductRepository proRepo = new ProductRepository();
+            AdminReportData crd = new AdminReportData();
+            EmployeeRepository empRepo = new EmployeeRepository();
+            BranchRepository bRepo = new BranchRepository();
+
+            crd.Name = this.Get(id).UserName;
+            crd.TotalManager = empRepo.GetAll().Where<Employee>(x => x.Designation == 0).Count();
+            crd.TotalDriver = empRepo.GetAll().Where<Employee>(x => x.Designation == 3).Count();
+            crd.TotalDeliveryBoy = empRepo.GetAll().Where<Employee>(x => x.Designation == 2).Count();
+            crd.TotalBranch = bRepo.GetAll().Count();
+            crd.HighestPaidManager = empRepo.GetAll().OrderByDescending(x => x.Salary).FirstOrDefault().Name;
+            crd.HighestPay = (double)empRepo.GetAll().OrderByDescending(x => x.Salary).FirstOrDefault().Salary;
+            return crd;
+        }
         public bool Validate(User u)
         {
             User user = this.GetAll().Where<User>(x => x.UserName == u.UserName && x.Password == u.Password).FirstOrDefault();
@@ -53,10 +71,10 @@ namespace Courier_Management_REST_WEB_API.Repositories
             return false;
         }
 
-        public int getIdbyUserName(User u)
+        public User getIdbyUserName(User u)
         {
             User user = this.GetAll().Where<User>(x => x.UserName == u.UserName).FirstOrDefault();
-            return user.Id;
+            return user;
         }
         public void UpdatePassword(int id,string password)
         {
@@ -88,7 +106,14 @@ namespace Courier_Management_REST_WEB_API.Repositories
         public int getByUserName(string u)
         {
             User user =  GetAll().Where<User>(x => x.UserName == u).FirstOrDefault();
-            return user.Id;
+            if(user == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return user.Id;
+            }
         }
 
         public void insertUser(User u,Customer c)

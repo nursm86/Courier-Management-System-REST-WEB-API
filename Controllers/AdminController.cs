@@ -52,6 +52,11 @@ namespace Courier_Management_REST_WEB_API.Controllers
         {
             return Ok(branchRepo.GetAll());
         }
+        [Route("report/{id}")]
+        public IHttpActionResult GetReport(int id)
+        {
+            return Ok(userRepo.Report(id));
+        }
 
         [Route("Branch/{id}"), AdminAuthentication]
         public IHttpActionResult GetBranch(int id)
@@ -59,10 +64,19 @@ namespace Courier_Management_REST_WEB_API.Controllers
             return Ok(branchRepo.Get(id));
         }
 
+        [Route("Branch/{id}"), AdminAuthentication]
+        public IHttpActionResult PutBranch([FromUri]int id,[FromBody]Branch branch)
+        {
+            branch.Id = id;
+            branch.updatedDate = DateTime.Now;
+            branchRepo.Update(branch);
+            return Ok(branch);
+        }
         [Route("addBranch"), AdminAuthentication]
         public IHttpActionResult PostAddBranch(Branch branch)
         {
             var modelState = ActionContext.ModelState;
+            branch.updatedDate = DateTime.Now;
             if (modelState.IsValid)
             {
                 branchRepo.Insert(branch);
@@ -72,7 +86,7 @@ namespace Courier_Management_REST_WEB_API.Controllers
             
         }
         [Route("AllEmployee"), AdminAuthentication]
-        public IHttpActionResult GetAllEmployee(Branch branch)
+        public IHttpActionResult GetAllEmployee()
         {
             return Ok(empRepo.GetAll());
         }
@@ -84,14 +98,9 @@ namespace Courier_Management_REST_WEB_API.Controllers
         [Route("Employee/{id}"), AdminAuthentication]
         public IHttpActionResult PutUpdateEmployee(int id,Employee employee)
         {
-            var modelState = ActionContext.ModelState;
-            if (modelState.IsValid)
-            {
-                employee.userId = id;
-                empRepo.UpdateEmployeeInfo(employee);
-                return Ok(empRepo.GetByUid(id));
-            }
-            return BadRequest(modelState);
+            employee.userId = id;
+            empRepo.UpdateEmployeeInfo(employee);
+            return Ok(empRepo.GetByUid(id));
         }
         [Route("addEmployee"), AdminAuthentication]
         public IHttpActionResult PostAddEmployee(Employee employee)
@@ -108,6 +117,21 @@ namespace Courier_Management_REST_WEB_API.Controllers
         public IHttpActionResult GetAllProblems()
         {
             return Ok(epRepo.GetAll());
+        }
+
+        [Route("problem/{id}"), AdminAuthentication]
+        public IHttpActionResult GetProblem(int id)
+        {
+            return Ok(epRepo.Get(id));
+        }
+
+        [Route("removeEmploye/{id}")]
+        public IHttpActionResult DeleteEmployee(int id)
+        {
+            Employee employee = empRepo.GetByUid(id);
+            empRepo.Delete(employee.Id);
+            userRepo.Delete(id);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("solveProblem/{id}"), AdminAuthentication]

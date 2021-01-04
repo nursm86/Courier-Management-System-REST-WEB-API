@@ -24,7 +24,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
         public List<Product> receivedProduct(int id)
         {
             int bid = empRepo.getBranchId(id);
-            List<Product> products = GetAll().Where<Product>(x => (x.Sending_B_id == bid || x.Receiving_B_id == bid) && (x.Product_State == 0) || x.Product_State == 2).ToList();
+            List<Product> products = GetAll().Where<Product>(x => (x.Sending_B_id == bid && x.Product_State == 0) || (x.Receiving_B_id == bid && x.Product_State == 2)).ToList();
             //foreach (var item in products)
             //{
             //    item.Branch = branchRepo.Get(item.Sending_B_id);
@@ -87,6 +87,7 @@ namespace Courier_Management_REST_WEB_API.Repositories
         public void insertProduct(Product p)
         {
             p.UpdatedDate = DateTime.Now;
+            p.Product_State = 0;
             this.context.Products.Add(p);
             this.context.SaveChanges();
         }

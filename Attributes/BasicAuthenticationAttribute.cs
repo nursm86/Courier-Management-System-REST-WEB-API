@@ -32,7 +32,7 @@ namespace finalAssignment__APWDN.Attributes
 
                 if (usertype != -1)
                 {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(usertype.ToString()), null);
+                    //Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(usertype.ToString()), null);
                 }
                 else
                 {

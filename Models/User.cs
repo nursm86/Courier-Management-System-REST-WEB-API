@@ -37,7 +37,6 @@ namespace Courier_Management_REST_WEB_API.Models
         public string Password { get; set; }
         [Required]
         public int UserType { get; set; }
-        [Required]
         public int Status { get; set; }
         public string image { get; set; }
         [JsonIgnore,XmlIgnore]
